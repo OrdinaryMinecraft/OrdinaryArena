@@ -10,7 +10,6 @@ public class PlayerInteractHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onInteract(LivingDeathEvent event) {
         if (event.entityLiving instanceof EntityPlayer) {
-            System.out.println("TEST");
             EntityPlayer player = (EntityPlayer) event.entityLiving;
             try {
                 OrdinaryArenaBase.arenaService.leaveArena(player, false);

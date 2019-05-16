@@ -1,8 +1,12 @@
 package ru.flametaichou.ordinaryarena.service;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -14,11 +18,8 @@ import ru.flametaichou.ordinaryarena.model.ArenasXml;
 import ru.flametaichou.ordinaryarena.model.Point3D;
 import ru.flametaichou.ordinaryarena.utils.WorldUtils;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Random;
+
+import java.util.*;
 
 public class ArenaService implements IArenaService {
 
@@ -143,12 +144,16 @@ public class ArenaService implements IArenaService {
                 if (arenaPlayer.getName().equals(player.getDisplayName())) {
 
                     if (withTeleport) {
+                        int x = arenaPlayer.getX();
+                        int y = arenaPlayer.getY();
+                        int z = arenaPlayer.getZ();
+                        player.addChatMessage(new ChatComponentTranslation("Вы возвращаетесь в точку x:" + x + " y:" + y + " z:" + z));
                         WorldUtils.teleportToDimension(
                                 (EntityPlayerMP) player,
                                 arenaPlayer.getWorldId(),
-                                arenaPlayer.getX(),
-                                arenaPlayer.getY(),
-                                arenaPlayer.getZ()
+                                x,
+                                y,
+                                z
                         );
                     }
 
@@ -202,12 +207,30 @@ public class ArenaService implements IArenaService {
                 throw new IllegalStateException(error);
             }
 
-            if (world.getBlock(x, y ,z) == Blocks.air && world.getBlock(x, y+1 ,z) == Blocks.air && world.getBlock(x, y-1 ,z) != Blocks.air) {
-                return new Point3D(x, y, z);
+            if (world.getBlock(x, y , z) == Blocks.air && world.getBlock(x, y + 1, z) == Blocks.air && blockNotAir(world.getBlock(x, y - 1, z))) {
+                AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
+                        (double)(x - 5),
+                        (double)(y - 2),
+                        (double)(z - 5),
+                        (double)(x + 5),
+                        (double)(y + 2),
+                        (double)(z + 5)
+                );
+                List list = world.selectEntitiesWithinAABB(EntityMob.class, axisalignedbb, null);
+                if (list.isEmpty()) {
+                    return new Point3D(x, y, z);
+                }
             }
             i++;
         }
         throw new IllegalStateException("Error on getting spawn coordinates!");
+    }
+
+    private boolean blockNotAir(Block block) {
+        if (block.getMaterial() != Material.air && block.isCollidable() && block.isNormalCube()) {
+            return true;
+        }
+        return false;
     }
 
     public static int randomBetween(int min, int max) {

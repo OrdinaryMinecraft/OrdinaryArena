@@ -1,8 +1,8 @@
 [
 {
-  "modid": "dupefix",
-  "name": "DupeFIx",
-  "description": "Dupe Fix.",
+  "modid": "ordinaryarena",
+  "name": "Ordinary Arena",
+  "description": "Simple arena for server",
   "version": "0.1",
   "mcversion": "1.7.10",
   "url": "",

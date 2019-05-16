@@ -17,6 +17,7 @@ import net.minecraftforge.common.DimensionManager;
 import ru.flametaichou.ordinaryarena.model.MessageDimension;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class WorldUtils {
 
@@ -105,6 +106,9 @@ public class WorldUtils {
 
     public static void teleportToDimension(EntityPlayerMP player, int dimensionId, int x, int y, int z) {
         boolean dimensionTeleport = dimensionId != player.getEntityWorld().provider.dimensionId;
+        if (Objects.nonNull(player.ridingEntity)) {
+            player.mountEntity(null);
+        }
         if (dimensionTeleport) {
             NetworkHandler.channel.sendTo(new MessageDimension(dimensionId), player);
             World world = DimensionManager.getWorld(dimensionId);
@@ -114,6 +118,9 @@ public class WorldUtils {
             //player.travelToDimension(dimensionId);
         }
         //player.rotationYaw = getRotationYaw(facing);
-        player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
+        player.motionX = 0;
+        player.motionY = 0;
+        player.motionZ = 0;
+        player.setPositionAndUpdate(x < 0 ? x - 0.5 : x + 0.5, y, z < 0 ? z - 0.5 : z + 0.5);
     }
 }
