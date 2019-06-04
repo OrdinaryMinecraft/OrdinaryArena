@@ -44,8 +44,11 @@ public class CommandsQueueHandler {
                 if (now.after(command.timeExecute)) {
                     switch (command.type) {
                         case JOIN:
-                            OrdinaryArenaBase.arenaService.joinArena(command.player, command.arenaName);
-                            command.player.addChatMessage(new ChatComponentTranslation("Вы вошли на арену " + command.arenaName + ". Используйте /arena leave чтобы вернуться обратно."));
+                            if (OrdinaryArenaBase.arenaService.joinArena(command.player, command.arenaName)) {
+                                command.player.addChatMessage(new ChatComponentTranslation("Вы вошли на арену " + command.arenaName + ". Используйте /arena leave чтобы вернуться обратно."));
+                            } else {
+                                command.player.addChatMessage(new ChatComponentTranslation("При выполнении команды произошла ошибка!"));
+                            }
                             break;
                         case LEAVE:
                             try {

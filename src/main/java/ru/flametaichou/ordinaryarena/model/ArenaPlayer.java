@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ArenaPlayer {
 
     private String name;
-    private int x;
-    private int y;
-    private int z;
+    private double x;
+    private double y;
+    private double z;
     private int worldId;
 
     public ArenaPlayer() {
 
     }
 
-    public ArenaPlayer(String name, int x, int y, int z, int worldId) {
+    public ArenaPlayer(String name, double x, double y, double z, int worldId) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -36,29 +36,29 @@ public class ArenaPlayer {
     }
 
     @XmlAttribute(name = "x")
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
     @XmlAttribute(name = "y")
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
     @XmlAttribute(name = "z")
-    public int getZ() {
+    public double getZ() {
         return z;
     }
 
-    public void setZ(int z) {
+    public void setZ(double z) {
         this.z = z;
     }
 

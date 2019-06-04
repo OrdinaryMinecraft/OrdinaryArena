@@ -14,7 +14,7 @@ public interface IArenaService {
     void deleteArena(String name);
     void setPos1(Integer x, Integer y, Integer z, String name, Integer worldId);
     void setPos2(Integer x, Integer y, Integer z, String name, Integer worldId);
-    void joinArena(EntityPlayer player, String name);
+    boolean joinArena(EntityPlayer player, String name);
     void leaveArena(EntityPlayer player, Boolean withTeleport);
     boolean playerOnAnyArena(EntityPlayer player);
 }

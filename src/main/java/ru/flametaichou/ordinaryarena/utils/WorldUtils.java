@@ -1,10 +1,12 @@
 package ru.flametaichou.ordinaryarena.utils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
+import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChunkCoordinates;
@@ -43,6 +45,8 @@ public class WorldUtils {
             PotionEffect potioneffect = (PotionEffect)iterator.next();
             p_72356_1_.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(p_72356_1_.getEntityId(), potioneffect));
         }
+
+        p_72356_1_.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(p_72356_1_.experience, p_72356_1_.experienceTotal, p_72356_1_.experienceLevel));
         FMLCommonHandler.instance().firePlayerChangedDimensionEvent(p_72356_1_, j, p_72356_2_);
     }
 
@@ -104,7 +108,7 @@ public class WorldUtils {
     }
 
 
-    public static void teleportToDimension(EntityPlayerMP player, int dimensionId, int x, int y, int z) {
+    public static void teleportToDimension(EntityPlayerMP player, int dimensionId, double x, double y, double z) {
         boolean dimensionTeleport = dimensionId != player.getEntityWorld().provider.dimensionId;
         if (Objects.nonNull(player.ridingEntity)) {
             player.mountEntity(null);
@@ -121,6 +125,6 @@ public class WorldUtils {
         player.motionX = 0;
         player.motionY = 0;
         player.motionZ = 0;
-        player.setPositionAndUpdate(x < 0 ? x - 0.5 : x + 0.5, y, z < 0 ? z - 0.5 : z + 0.5);
+        player.setPositionAndUpdate(x, y, z);
     }
 }
