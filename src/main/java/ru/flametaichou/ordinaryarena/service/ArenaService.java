@@ -185,7 +185,6 @@ public class ArenaService implements IArenaService {
                     return true;
                 }
             }
-            return false;
         }
         return false;
     }
