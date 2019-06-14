@@ -84,7 +84,7 @@ public class OrdinaryArenaCommands extends CommandBase
                     OrdinaryArenaBase.commandsQueue.getCommandsQueue().add(
                             new Command(
                                     Command.CommandType.JOIN,
-                                    player,
+                                    player.getDisplayName(),
                                     timeToExecute,
                                     name
                             )
@@ -101,7 +101,7 @@ public class OrdinaryArenaCommands extends CommandBase
                     OrdinaryArenaBase.commandsQueue.getCommandsQueue().add(
                             new Command(
                                     Command.CommandType.LEAVE,
-                                    player,
+                                    player.getDisplayName(),
                                     timeToExecute,
                                     null
                             )

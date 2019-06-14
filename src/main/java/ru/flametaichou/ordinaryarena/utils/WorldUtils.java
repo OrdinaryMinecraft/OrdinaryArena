@@ -1,7 +1,6 @@
 package ru.flametaichou.ordinaryarena.utils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.S07PacketRespawn;
@@ -126,5 +125,18 @@ public class WorldUtils {
         player.motionY = 0;
         player.motionZ = 0;
         player.setPositionAndUpdate(x, y, z);
+    }
+
+    public static EntityPlayerMP findPlayer(String playerName) {
+        for (WorldServer worldServer : MinecraftServer.getServer().worldServers) {
+            for (Object playerObj : worldServer.playerEntities) {
+                EntityPlayerMP player = (EntityPlayerMP) playerObj;
+                if (playerName.equals(player.getDisplayName())) {
+                    return player;
+                }
+            }
+        }
+
+        return null;
     }
 }
