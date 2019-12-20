@@ -128,6 +128,7 @@ public class WorldUtils {
     }
 
     public static EntityPlayerMP findPlayer(String playerName) {
+        //EntityPlayerMP entityplayermp = minecraftserver.getConfigurationManager().func_152612_a(playerName);
         for (WorldServer worldServer : MinecraftServer.getServer().worldServers) {
             for (Object playerObj : worldServer.playerEntities) {
                 EntityPlayerMP player = (EntityPlayerMP) playerObj;
